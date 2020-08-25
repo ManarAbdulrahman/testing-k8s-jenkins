@@ -52,7 +52,7 @@ spec:
               container('dnd') {
                    withCredentials([string(credentialsId: 'docker-hub', variable: 'docker-hub-token')]) {
                          sh '''
-                                              docker login -p ${docker-hub-token} -u manarabdulrahman
+                                              docker login -u $DOCKER_NAMESPACE -p ${docker-hub-token}
                                               docker push $DOCKER_NAMESPACE/$SERVICE_NAME
                                           '''
                   }
