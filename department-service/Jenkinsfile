@@ -50,9 +50,9 @@ spec:
       stage("Release") {
           steps {
               container('dnd') {
-                   withCredentials([string(credentialsId: 'docker-hub', variable: 'docker-hub-token')]) {
+                   withCredentials([string(credentialsId: 'docker-hub', variable: 'docker-hub-psw')]) {
                          sh '''
-                                              docker login -u $DOCKER_NAMESPACE -p ${docker-hub-token}
+                                              docker login -u $DOCKER_NAMESPACE -p ${docker-hub-psw}
                                               docker push $DOCKER_NAMESPACE/$SERVICE_NAME
                                           '''
                   }
