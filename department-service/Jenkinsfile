@@ -63,7 +63,7 @@ spec:
               container('kubectl') {
                   sh '''
                       cd $SERVICE_NAME
-                      kubectl -n test apply -f department
+                      kubectl -n test apply -f department.yaml
                   '''
               }
           }
