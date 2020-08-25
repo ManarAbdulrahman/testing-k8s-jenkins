@@ -1,4 +1,4 @@
-  pipeline {
+pipeline {
     agent {
     kubernetes {
           yaml """
@@ -34,7 +34,7 @@
        environment {
             DOCKER_NAMESPACE = 'manarabdulrahman'
             SERVICE_NAME = 'office-service'
-  }
+              }
    stages {
       stage("Build") {
          steps {
@@ -53,7 +53,7 @@
                         sh '''
                              docker login -u ${usr} -p ${psw
                              docker push $DOCKER_NAMESPACE/$SERVICE_NAM 
-                                                                                                                              '''
+                              '''
                   }
               }
           }

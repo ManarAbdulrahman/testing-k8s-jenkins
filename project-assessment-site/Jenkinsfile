@@ -53,7 +53,7 @@ spec:
                      sh '''
                                                 docker login -u ${usr} -p ${psw}
                                                 docker push $DOCKER_NAMESPACE/$SERVICE_NAME
-                                                                       '''
+                                      '''
                   }
               }
           }
