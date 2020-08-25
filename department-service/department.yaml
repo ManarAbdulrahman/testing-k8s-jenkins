@@ -26,7 +26,6 @@ kind: Service
 metadata:
   name: department-service
 spec:
-  type: LoadBalancer
   selector:
     app: department-service
   ports:

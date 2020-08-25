@@ -1,0 +1,72 @@
+pipeline {
+  agent {
+    kubernetes {
+      yaml """
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    service_name: person-service
+    service_type: REST
+spec:
+  containers:
+  - name: dnd
+    image: docker:latest
+    command: 
+    - cat
+    tty: true
+    volumeMounts:
+    - mountPath: /var/run/docker.sock
+      name: docker-sock
+  - name: kubectl
+    image: bryandollery/terraform-packer-aws-alpine
+    command:
+    - cat
+    tty: true
+  volumes:
+  - name: docker-sock
+    hostPath:
+      path: /var/run/docker.sock  
+      type: Socket
+"""
+    }
+  }
+  environment {
+    DOCKER_NAMESPACE = 'manarabdulrahman'
+    SERVICE_NAME = 'person-service'
+  }
+  stages {
+      stage("Build") {
+          steps {
+              container('dnd') {
+                  sh '''
+                      cd $SERVICE_NAME
+                      docker build --tag $DOCKER_NAMESPACE/$SERVICE_NAME .
+                  '''
+              }
+          }
+      }
+      stage("Release") {
+          steps {
+              container('dnd') {
+                  withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'psw', usernameVariable: 'usr')]) {
+                     sh '''
+                                                docker login -u ${usr} -p ${psw}
+                                                docker push $DOCKER_NAMESPACE/$SERVICE_NAME
+                                                                       '''
+                  }
+              }
+          }
+      }
+      stage("Deploy") {
+          steps {
+              container('kubectl') {
+                  sh '''
+                      cd $SERVICE_NAME
+                      kubectl -n test apply -f person.yaml
+                  '''
+              }
+          }
+      }
+  }
+}
