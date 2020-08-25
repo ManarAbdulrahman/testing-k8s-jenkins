@@ -33,7 +33,7 @@ spec:
   }
   environment {
     DOCKER_NAMESPACE = 'manarabdulrahman'
-    CREDS = credentials("docker-hub-creds")
+    CREDS = 'docker-hub-creds'
     SERVICE_NAME = 'department-service'
     //TOKEN=credentials('tester_token')
   }
