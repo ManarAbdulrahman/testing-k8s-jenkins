@@ -1,7 +1,7 @@
 pipeline {
     agent {
     kubernetes {
-          yaml """
+      yaml """
   apiVersion: v1
   kind: Pod
   metadata:
@@ -43,7 +43,7 @@ pipeline {
                           cd $SERVICE_NAME
                           docker build --tag $DOCKER_NAMESPACE/$SERVICE_NAME .
                         '''
-             }
+            }
          }
       }
       stage("Release") {
