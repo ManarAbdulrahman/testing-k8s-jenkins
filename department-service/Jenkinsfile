@@ -32,10 +32,9 @@ spec:
     }
   }
   environment {
-    CREDS = credentials('')
     DOCKER_NAMESPACE = 'manarabdulrahman'
     SERVICE_NAME = 'department-service'
-    TOKEN=credentials('tester_token')
+    //TOKEN=credentials('tester_token')
   }
   stages {
       stage("Build") {
@@ -43,7 +42,7 @@ spec:
               container('dnd') {
                   sh '''
                       cd $SERVICE_NAME
-                      docker build . --tag $DOCKER_NAMESPACE/$SERVICE_NAME
+                      docker build --tag $DOCKER_NAMESPACE/$SERVICE_NAME:v1 .
                   '''
               }
           }
