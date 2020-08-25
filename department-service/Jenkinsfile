@@ -32,6 +32,7 @@ spec:
     }
   }
   environment {
+    CREDS = credentials('docker-hub-creds')
     DOCKER_NAMESPACE = 'manarabdulrahman'
     SERVICE_NAME = 'department-service'
     //TOKEN=credentials('tester_token')
@@ -50,12 +51,10 @@ spec:
       stage("Release") {
           steps {
               container('dnd') {
-                   withCredentials([string(credentialsId: 'docker-hub', variable: 'docker-hub-psw')]) {
-                         sh '''
-                                              docker login -u $DOCKER_NAMESPACE -p ${docker-hub-psw}
-                                              docker push $DOCKER_NAMESPACE/$SERVICE_NAME
-                                          '''
-                  }
+                  sh '''
+                           docker login -u $CREDS_USR -p $CREDS_PSW
+                           docker push $DOCKER_NAMESPACE/$SERVICE_NAME
+                                                  '''
 
               }
           }
