@@ -33,14 +33,14 @@ spec:
   }
   environment {
     DOCKER_NAMESPACE = 'manarabdulrahman'
-    SERVICE_NAME = 'frontend-service'
+    SERVICE_NAME = 'webapp-service'
   }
   stages {
       stage("Build") {
           steps {
               container('dnd') {
                   sh '''
-                      cd $SERVICE_NAME
+                      cd project-assessment-site
                       docker build --tag $DOCKER_NAMESPACE/$SERVICE_NAME .
                   '''
               }
@@ -63,7 +63,7 @@ spec:
               container('kubectl') {
                   sh '''
                       cd $SERVICE_NAME
-                      kubectl -n test apply -f frontend.yaml
+                      kubectl -n test apply -f webapp.yaml
                   '''
               }
           }
