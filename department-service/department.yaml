@@ -24,11 +24,15 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  labels:
+    app: department-service
   name: department-service
 spec:
+  type: NodePort
   selector:
     app: department-service
   ports:
     - port: 80
+      name:
       targetPort: 8081
       nodePort: 30001
