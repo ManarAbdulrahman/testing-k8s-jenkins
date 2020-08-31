@@ -57,7 +57,7 @@ spec:
                   }
               }
           }
-      }
+      } //testinf comments
       stage("Deploy") {
           steps {
               container('kubectl') {
